@@ -4,12 +4,13 @@
 @inject NavigationManager NavigationManager
 @attribute [Authorize]
 
-
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Test2</a>
+        <img src="Images/AdoptionWebsiteLogo.webp" alt="cats" style="width:25px;" class="rounded-pill">
+        <a class="navbar-brand" href="">Dog Adoption Center</a>
     </div>
 </div>
+
 
 <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
 
@@ -43,10 +44,27 @@
         <AuthorizeView>
             <Authorized>
                 <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Manage">
+                    <NavLink class="nav-link" href="/Account/ConfirmEmail">
                         <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
                     </NavLink>
                 </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="forms">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Adoption Forms
+                    </NavLink>
+                </div>
+                
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="contactforms">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Contact Forms
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="contactus">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Contact Us
+                    </NavLink>
+                </div>
+                
                 <div class="nav-item px-3">
                     <form action="Account/Logout" method="post">
                         <AntiforgeryToken />
@@ -68,7 +86,7 @@
                         <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
                     </NavLink>
                 </div>
-
+                
                 
             </NotAuthorized>
         </AuthorizeView>

@@ -1,0 +1,50 @@
+﻿@page "/contactforms"
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using AdoptionWebsiteTest.Models
+@using Test2.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<Test2.Data.Test2Context> DbFactory
+
+<PageTitle>Contact Forms</PageTitle>
+
+<h1>Contact Page</h1>
+
+
+
+<QuickGrid Class="table" Items="context.ContactForm">
+    <PropertyColumn Property="contactform => contactform.Email" />
+    <PropertyColumn Property="contactform => contactform.QuestionsAndConcerns" />
+
+    <TemplateColumn Context="contactform">
+        <a href="@($"contactforms/edit?id={contactform.Id}")">Edit</a> |
+        <a href="@($"contactforms/details?id={contactform.Id}")">Details</a> |
+        <a href="@($"contactforms/delete?id={contactform.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private Test2Context context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+    private bool IsMember;
+    private bool IsAdmin;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        IsMember = user.IsInRole("Member");
+        IsAdmin = user.IsInRole("Admin");
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

@@ -1,14 +1,19 @@
-using Microsoft.AspNetCore.Components.Authorization;
+﻿using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Test2.Client.Pages;
 using Test2.Components;
 using Test2.Components.Account;
 using Test2.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 
  
     var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContextFactory<Test2Context>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Test2Context") ?? throw new InvalidOperationException("Connection string 'Test2Context' not found.")));
+
+builder.Services.AddQuickGridEntityFrameworkAdapter();
 
     // Add services to the container.
     builder.Services.AddRazorComponents()
@@ -53,6 +58,7 @@ using Test2.Data;
         app.UseExceptionHandler("/Error", createScopeForErrors: true);
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
+    app.UseMigrationsEndPoint();
     }
 
     app.UseHttpsRedirection();
@@ -65,7 +71,7 @@ using Test2.Data;
         .AddInteractiveWebAssemblyRenderMode()
         .AddAdditionalAssemblies(typeof(Test2.Client._Imports).Assembly);
 
-    // Add additional endpoints required by the Identity /Account Razor components.
+     //Add additional endpoints required by the Identity /Account Razor components.
     app.MapAdditionalIdentityEndpoints();
 
 
@@ -96,10 +102,10 @@ using Test2.Data;
             user.Email = email;
             user.EmailConfirmed = true;
 
-            await userManager.CreateAsync(user, password);
+        await userManager.CreateAsync(user, password);
 
-            await userManager.AddToRoleAsync(user, "Admin");
-        }
+        await userManager.AddToRoleAsync(user, "Admin");
+    }
     }
 
 
