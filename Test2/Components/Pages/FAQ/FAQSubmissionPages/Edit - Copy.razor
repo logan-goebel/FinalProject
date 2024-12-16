@@ -1,14 +1,14 @@
-﻿@page "/testing"
+﻿@page "/faq/admin/edit"
 @using Microsoft.EntityFrameworkCore
 @using Test2.Models
 @inject IDbContextFactory<Test2.Data.Test2Context> DbFactory
 @inject NavigationManager NavigationManager
 
-<PageTitle>Edit</PageTitle>
+<PageTitle>Answer</PageTitle>
 
-<h1>Edit</h1>
+<h1>Answer</h1>
 
-<h2>FAQSubmission</h2>
+
 <hr />
 @if (FAQSubmission is null)
 {
@@ -24,12 +24,12 @@ else
                 <input type="hidden" name="FAQSubmission.Id" value="@FAQSubmission.Id" />
                 <div class="mb-3">
                     <label for="email" class="form-label">Email:</label>
-                    <InputText id="email" @bind-Value="FAQSubmission.Email" class="form-control" aria-required="true"/>
+                    <InputText id="email" @bind-Value="FAQSubmission.Email" readonly class="form-control" aria-required="true"/>
                     <ValidationMessage For="() => FAQSubmission.Email" class="text-danger" />
                 </div>
                 <div class="mb-3">
                     <label for="question" class="form-label">Question:</label>
-                    <InputText id="question" @bind-Value="FAQSubmission.Question" class="form-control" aria-required="true"/>
+                    <InputText id="question" @bind-Value="FAQSubmission.Question" readonly class="form-control" aria-required="true"/>
                     <ValidationMessage For="() => FAQSubmission.Question" class="text-danger" />
                 </div>
                 <div class="mb-3">
@@ -44,10 +44,11 @@ else
 }
 
 <div>
-    <a href="/faqsubmissions">Back to List</a>
+    <a href="/faq/admin">Back</a>
 </div>
 
 @code {
+    
     [SupplyParameterFromQuery]
     private int Id { get; set; }
 
@@ -88,7 +89,7 @@ else
             }
         }
 
-        NavigationManager.NavigateTo("/faqsubmissions");
+        NavigationManager.NavigateTo("/faq/admin");
     }
 
     private bool FAQSubmissionExists(int id)

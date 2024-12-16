@@ -1,4 +1,4 @@
-﻿@page "/test"
+﻿@page "/faq/admin"
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Components.QuickGrid
 @using Test2.Models
@@ -6,13 +6,11 @@
 @implements IAsyncDisposable
 @inject IDbContextFactory<Test2.Data.Test2Context> DbFactory
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Answer Questions</PageTitle>
 
-<h1>Index</h1>
+<h1>Answer Questions</h1>
 
-<p>
-    <a href="faqsubmissions/create">Create New</a>
-</p>
+
 
 <QuickGrid Class="table" Items="context.FAQSubmission">
     <PropertyColumn Property="faqsubmission => faqsubmission.Email" />
@@ -20,9 +18,8 @@
     <PropertyColumn Property="faqsubmission => faqsubmission.Answer" />
 
     <TemplateColumn Context="faqsubmission">
-        <a href="@($"faqsubmissions/edit?id={faqsubmission.Id}")">Edit</a> |
-        <a href="@($"faqsubmissions/details?id={faqsubmission.Id}")">Details</a> |
-        <a href="@($"faqsubmissions/delete?id={faqsubmission.Id}")">Delete</a>
+        <a href="@($"faq/admin/edit?id={faqsubmission.Id}")">Submit Answer</a> |
+        <a href="@($"faq/admin/delete?id={faqsubmission.Id}")">Delete</a>
     </TemplateColumn>
 </QuickGrid>
 
