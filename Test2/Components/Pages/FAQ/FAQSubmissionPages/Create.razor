@@ -1,0 +1,55 @@
+﻿@page "/faq/submit/new"
+@using Microsoft.EntityFrameworkCore
+@using Test2.Models
+@inject IDbContextFactory<Test2.Data.Test2Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Submit Question</PageTitle>
+
+
+
+<h2>Submit your Question:</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="FAQSubmission" OnValidSubmit="AddFAQSubmission" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label> 
+                <InputText id="email" @bind-Value="FAQSubmission.Email" class="form-control" aria-required="true"/> 
+                <ValidationMessage For="() => FAQSubmission.Email" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="question" class="form-label">Question:</label> 
+                <InputText id="question" @bind-Value="FAQSubmission.Question" class="form-control" aria-required="true"/> 
+                <ValidationMessage For="() => FAQSubmission.Question" class="text-danger" /> 
+            </div>      
+            
+            @* <div class="mb-3">
+                <label for="answer" class="form-label">Answer:</label> 
+                <InputText id="answer" @bind-Value="FAQSubmission.Answer" class="form-control" /> 
+                <ValidationMessage For="() => FAQSubmission.Answer" class="text-danger" /> 
+            </div>   *@      
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/faq/submit">Back</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private FAQSubmission FAQSubmission { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddFAQSubmission()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.FAQSubmission.Add(FAQSubmission);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/faq/submit");
+    }
+}

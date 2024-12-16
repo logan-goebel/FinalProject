@@ -1,0 +1,50 @@
+﻿@page "/faqsubmissions/details"
+@using Microsoft.EntityFrameworkCore
+@using Test2.Models
+@inject IDbContextFactory<Test2.Data.Test2Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>FAQSubmission</h2>
+    <hr />
+    @if (faqsubmission is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Email</dt>
+            <dd class="col-sm-10">@faqsubmission.Email</dd>
+            <dt class="col-sm-2">Question</dt>
+            <dd class="col-sm-10">@faqsubmission.Question</dd>
+            <dt class="col-sm-2">Answer</dt>
+            <dd class="col-sm-10">@faqsubmission.Answer</dd>
+        </dl>
+        <div>
+            <a href="@($"/faqsubmissions/edit?id={faqsubmission.Id}")">Edit</a> |
+            <a href="@($"/faqsubmissions")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private FAQSubmission? faqsubmission;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        faqsubmission = await context.FAQSubmission.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (faqsubmission is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}
