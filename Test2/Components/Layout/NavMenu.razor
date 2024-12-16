@@ -48,23 +48,43 @@
                         <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
                     </NavLink>
                 </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="forms">
-                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Adoption Forms
-                    </NavLink>
-                </div>
+
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="forms">
+                            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Adoption Forms
+                        </NavLink>
+                    </div>
                 
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="contactforms">
+                            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Contact Forms
+                        </NavLink>
+                    </div>
+
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="contactus">
+                            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Contact Us
+                        </NavLink>
+                    </div>
+
                 <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="contactforms">
-                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Contact Forms
+                    <NavLink class="nav-link" href="FAQ">
+                        <span class="" aria-hidden="true"></span> FAQ
                     </NavLink>
                 </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="contactus">
-                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Contact Us
-                    </NavLink>
-                </div>
-                
+
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="/doglists">
+                            <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> View Dogs
+                        </NavLink>
+                    </div>
+
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="/doglists/admin">
+                            <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Admin DogList
+                        </NavLink>
+                    </div>
+
                 <div class="nav-item px-3">
                     <form action="Account/Logout" method="post">
                         <AntiforgeryToken />
@@ -74,11 +94,7 @@
                         </button>
                     </form>
                 </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="/doglists/create">
-                        <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> DogList
-                    </NavLink>
-                </div>
+
             </Authorized>
             <NotAuthorized>
                 <div class="nav-item px-3">
@@ -86,6 +102,7 @@
                         <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
                     </NavLink>
                 </div>
+
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Account/Login">
                         <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
@@ -96,11 +113,7 @@
             </NotAuthorized>
         </AuthorizeView>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="FAQ">
-                <span class="" aria-hidden="true"></span> FAQ
-            </NavLink>
-        </div>
+
 
 
 
