@@ -1,4 +1,4 @@
-﻿@page "/doglists"
+﻿@page "/doglists/admin"
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Components.QuickGrid
 @using Test2.Models
@@ -21,9 +21,9 @@
     <PropertyColumn Property="doglist => doglist.DogBreed" />
 
     <TemplateColumn Context="doglist">
-        @* <a href="@($"doglists/edit?id={doglist.Id}")">Edit</a> | *@
-        <a href="@($"doglists/details?id={doglist.Id}")">Details</a>
-        @* <a href="@($"doglists/delete?id={doglist.Id}")">Delete</a> *@
+        <a href="@($"doglists/edit?id={doglist.Id}")">Edit</a> |
+        <a href="@($"doglists/admin/details?id={doglist.Id}")">Details</a> |
+        <a href="@($"doglists/delete?id={doglist.Id}")">Delete</a>
     </TemplateColumn>
 </QuickGrid>
 
