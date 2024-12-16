@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using AdoptionWebsiteTest.Models;
+using Test2.Models;
 
 namespace Test2.Data
 {
@@ -16,5 +17,6 @@ namespace Test2.Data
 
         public DbSet<AdoptionWebsiteTest.Models.ContactForm> ContactForm { get; set; } = default!;
         public DbSet<AdoptionWebsiteTest.Models.Form> Form { get; set; } = default!;
+        public DbSet<Test2.Models.DogList> DogList { get; set; } = default!;
     }
 }

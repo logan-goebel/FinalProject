@@ -1,0 +1,104 @@
+﻿@page "/doglists/edit"
+@using Microsoft.EntityFrameworkCore
+@using Test2.Models
+@inject IDbContextFactory<Test2.Data.Test2Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>DogList</h2>
+<hr />
+@if (DogList is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="DogList" OnValidSubmit="UpdateDogList" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="DogList.Id" value="@DogList.Id" />
+                <div class="mb-3">
+                    <label for="dogname" class="form-label">DogName:</label>
+                    <InputText id="dogname" @bind-Value="DogList.DogName" class="form-control" />
+                    <ValidationMessage For="() => DogList.DogName" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="dogage" class="form-label">DogAge:</label>
+                    <InputNumber id="dogage" @bind-Value="DogList.DogAge" class="form-control" />
+                    <ValidationMessage For="() => DogList.DogAge" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="dogdescription" class="form-label">DogDescription:</label>
+                    <InputText id="dogdescription" @bind-Value="DogList.DogDescription" class="form-control" />
+                    <ValidationMessage For="() => DogList.DogDescription" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="dogbreed" class="form-label">DogBreed:</label>
+                    <InputText id="dogbreed" @bind-Value="DogList.DogBreed" class="form-control" />
+                    <ValidationMessage For="() => DogList.DogBreed" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/doglists">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private DogList? DogList { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        DogList ??= await context.DogList.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (DogList is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateDogList()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(DogList!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!DogListExists(DogList!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/doglists");
+    }
+
+    private bool DogListExists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.DogList.Any(e => e.Id == id);
+    }
+}

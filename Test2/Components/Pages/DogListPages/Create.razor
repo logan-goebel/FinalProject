@@ -1,0 +1,59 @@
+﻿@page "/doglists/create"
+@using Microsoft.EntityFrameworkCore
+@using Test2.Models
+@inject IDbContextFactory<Test2.Data.Test2Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>DogList</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="DogList" OnValidSubmit="AddDogList" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="dogname" class="form-label">DogName:</label> 
+                <InputText id="dogname" @bind-Value="DogList.DogName" class="form-control" /> 
+                <ValidationMessage For="() => DogList.DogName" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="dogage" class="form-label">DogAge:</label> 
+                <InputNumber id="dogage" @bind-Value="DogList.DogAge" class="form-control" /> 
+                <ValidationMessage For="() => DogList.DogAge" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="dogdescription" class="form-label">DogDescription:</label> 
+                <InputText id="dogdescription" @bind-Value="DogList.DogDescription" class="form-control" /> 
+                <ValidationMessage For="() => DogList.DogDescription" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="dogbreed" class="form-label">DogBreed:</label> 
+                <InputText id="dogbreed" @bind-Value="DogList.DogBreed" class="form-control" /> 
+                <ValidationMessage For="() => DogList.DogBreed" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/doglists">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private DogList DogList { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddDogList()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.DogList.Add(DogList);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/doglists");
+    }
+}

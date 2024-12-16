@@ -1,0 +1,52 @@
+﻿@page "/doglists/details"
+@using Microsoft.EntityFrameworkCore
+@using Test2.Models
+@inject IDbContextFactory<Test2.Data.Test2Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>DogList</h2>
+    <hr />
+    @if (doglist is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">DogName</dt>
+            <dd class="col-sm-10">@doglist.DogName</dd>
+            <dt class="col-sm-2">DogAge</dt>
+            <dd class="col-sm-10">@doglist.DogAge</dd>
+            <dt class="col-sm-2">DogDescription</dt>
+            <dd class="col-sm-10">@doglist.DogDescription</dd>
+            <dt class="col-sm-2">DogBreed</dt>
+            <dd class="col-sm-10">@doglist.DogBreed</dd>
+        </dl>
+        <div>
+            <a href="@($"/doglists/edit?id={doglist.Id}")">Edit</a> |
+            <a href="@($"/doglists")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private DogList? doglist;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        doglist = await context.DogList.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (doglist is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

@@ -17,6 +17,11 @@
       "type": "mssql",
       "connectionId": "AdoptionFomrs",
       "dynamicId": null
+    },
+    "mssql5": {
+      "type": "mssql",
+      "connectionId": "DogList",
+      "dynamicId": null
     }
   }
 }

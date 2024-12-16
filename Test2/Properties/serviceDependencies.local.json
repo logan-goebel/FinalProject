@@ -21,6 +21,13 @@
       "type": "mssql.local",
       "connectionId": "AdoptionFomrs",
       "dynamicId": null
+    },
+    "mssql5": {
+      "serviceConnectorResourceId": "",
+      "secretStore": "LocalSecretsFile",
+      "type": "mssql.local",
+      "connectionId": "DogList",
+      "dynamicId": null
     }
   }
 }
