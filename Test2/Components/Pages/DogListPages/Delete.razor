@@ -62,6 +62,6 @@
         using var context = DbFactory.CreateDbContext();
         context.DogList.Remove(doglist!);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/doglists");
+        NavigationManager.NavigateTo("/doglists/admin");
     }
 }
