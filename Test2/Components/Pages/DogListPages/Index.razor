@@ -18,14 +18,7 @@
     <input type="search" name="breedFilter" />
 
     <input type="submit" value="Search by breed" />
-</form>
-  &nbsp;&nbsp;
-<form action="/doglists" data-enhance>
-    <input type="search" name="age"/>
-    <input type="submit" value="Search by age" />
-</form>
-
-<table style="width:100%">
+</form><table style="width:100%">
     <tr>
         <td>Photo</td>
         <td>Name</td>
@@ -34,7 +27,7 @@
         <td>Description</td>
         <td>Links</td>
     </tr>
-    @foreach (var item in ListsOfDogs)
+    @foreach (var item in listOfDogs)
     {
         <tr>
             <td>
@@ -69,14 +62,7 @@
 
     [Parameter]
     [SupplyParameterFromQuery]
-    public string? breedFilter { get; set; }
-    [Parameter]
-    [SupplyParameterFromQuery]
-    public string? ageFilter { get; set; }
-
-    public List<DogList> ListsOfDogs;
-
-    //Create a collection of Book objects.
+    public string? breedFilter { get; set; }//Create a collection of Book objects.
     public IEnumerable<DogList> listOfDogs { get; set; } = new List<DogList>();
     private Test2Context context = default!;
     protected override void OnInitialized()
@@ -84,25 +70,19 @@
         context = DbFactory.CreateDbContext();
         // fill selected data to the BookList of books
 
-        if (breedFilter != null || ageFilter != null)
+        if (breedFilter != null)
         {
             if (breedFilter != null)
             {
                 listOfDogs = context.DogList.Where(
                 item => item.DogBreed.ToLower().Contains(breedFilter)).ToList();
             }
-            if (ageFilter != null)
-            {
-                listOfDogs = context.DogList.Where(
-                    item => item.DogAge.ToString().Contains(ageFilter)).ToList();
-            }
         }
         else
         {
             listOfDogs = context.DogList.ToList();
-        }
-        context = DbFactory.CreateDbContext();
-        ListsOfDogs = context.DogList.ToList();
+        }  
+
     }
     public async ValueTask DisposeAsync() => await context.DisposeAsync();
 
