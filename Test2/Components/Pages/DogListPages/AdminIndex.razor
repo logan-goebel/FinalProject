@@ -9,31 +9,81 @@
 <PageTitle>Index</PageTitle>
 
 <h1>Index</h1>
-
 <p>
     <a href="doglists/create">Create New</a>
 </p>
 
-<QuickGrid Class="table" Items="context.DogList">
-    <PropertyColumn Property="doglist => doglist.DogName" />
-    <PropertyColumn Property="doglist => doglist.DogAge" />
-    <PropertyColumn Property="doglist => doglist.DogDescription" />
-    <PropertyColumn Property="doglist => doglist.DogBreed" />
+<form action="/doglists" data-enhance>
+    <input type="search" name="breedFilter" />
 
-    <TemplateColumn Context="doglist">
-        <a href="@($"doglists/edit?id={doglist.Id}")">Edit</a> |
-        <a href="@($"doglists/admin/details?id={doglist.Id}")">Details</a> |
-        <a href="@($"doglists/delete?id={doglist.Id}")">Delete</a>
-    </TemplateColumn>
-</QuickGrid>
+    <input type="submit" value="Search by breed" />
+</form>
+<table style="width:100%">
+    <tr>
+        <td>Photo</td>
+        <td>Name</td>
+        <td>Age</td>
+        <td>Breed</td>
+        <td>Description</td>
+        <td>Links</td>
+    </tr>
+    @foreach (var item in listOfDogs)
+    {
+        <tr>
+            <td>
+                <img src=@item.dogPhoto alt="myDog" style="width:100px;height:100px">
+            </td>
+            <td>
+                @item.DogName
+            </td>
+            <td>
+                @item.DogAge
+            </td>
+            <td>
+                @item.DogBreed
+            </td>
+            <td>
+                @item.DogDescription
+            </td>
+            <td>
+
+                <a href="@($"doglists/edit?id={@item.Id}")">Edit</a> |
+                <a href="@($"doglists/details/admin?id={@item.Id}")">Details</a> |
+                <a href="@($"doglists/delete?id={@item.Id}")">Delete</a>
+
+            </td>
+        </tr>
+
+    }
+
+</table>
 
 @code {
-    private Test2Context context = default!;
 
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? breedFilter { get; set; }//Create a collection of Book objects.
+    public IEnumerable<DogList> listOfDogs { get; set; } = new List<DogList>();
+    private Test2Context context = default!;
     protected override void OnInitialized()
     {
         context = DbFactory.CreateDbContext();
-    }
+        // fill selected data to the BookList of books
 
+        if (breedFilter != null)
+        {
+            if (breedFilter != null)
+            {
+                listOfDogs = context.DogList.Where(
+                item => item.DogBreed.ToLower().Contains(breedFilter)).ToList();
+            }
+        }
+        else
+        {
+            listOfDogs = context.DogList.ToList();
+        }
+
+    }
     public async ValueTask DisposeAsync() => await context.DisposeAsync();
+
 }
