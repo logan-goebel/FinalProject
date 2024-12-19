@@ -15,6 +15,7 @@ else
 
     <div>
 
+<<<<<<< HEAD
         <hr />
    
             <dl class="row">
@@ -37,6 +38,34 @@ else
             
     </div>
 }
+=======
+<div>
+    <h2>DogList</h2>
+    <hr />
+    @if (doglist is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">dogPhoto</dt>
+            <dd class="col-sm-10">@doglist.dogPhoto</dd>
+            <dt class="col-sm-2">DogName</dt>
+            <dd class="col-sm-10">@doglist.DogName</dd>
+            <dt class="col-sm-2">DogAge</dt>
+            <dd class="col-sm-10">@doglist.DogAge</dd>
+            <dt class="col-sm-2">DogDescription</dt>
+            <dd class="col-sm-10">@doglist.DogDescription</dd>
+            <dt class="col-sm-2">DogBreed</dt>
+            <dd class="col-sm-10">@doglist.DogBreed</dd>
+        </dl>
+        <div>
+            <a href="@($"/doglists/edit?id={doglist.Id}")">Edit</a> |
+            <a href="@($"/doglists")">Back to List</a>
+        </div>
+    }
+</div>
+>>>>>>> DogList
 
 @code {
     private DogList? doglist;

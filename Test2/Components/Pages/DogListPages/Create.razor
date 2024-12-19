@@ -16,22 +16,27 @@
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert"/>
             <div class="mb-3">
-                <label for="dogname" class="form-label">DogName:</label> 
+                <label for="dogphoto" class="form-label">Photo:</label> 
+                <InputText id="dogphoto" @bind-Value="DogList.dogPhoto" class="form-control" /> 
+                <ValidationMessage For="() => DogList.dogPhoto" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="dogname" class="form-label">Name:</label> 
                 <InputText id="dogname" @bind-Value="DogList.DogName" class="form-control" /> 
                 <ValidationMessage For="() => DogList.DogName" class="text-danger" /> 
             </div>        
             <div class="mb-3">
-                <label for="dogage" class="form-label">DogAge:</label> 
+                <label for="dogage" class="form-label">Age:</label> 
                 <InputNumber id="dogage" @bind-Value="DogList.DogAge" class="form-control" /> 
                 <ValidationMessage For="() => DogList.DogAge" class="text-danger" /> 
             </div>        
             <div class="mb-3">
-                <label for="dogdescription" class="form-label">DogDescription:</label> 
+                <label for="dogdescription" class="form-label">Description:</label> 
                 <InputText id="dogdescription" @bind-Value="DogList.DogDescription" class="form-control" /> 
                 <ValidationMessage For="() => DogList.DogDescription" class="text-danger" /> 
             </div>        
             <div class="mb-3">
-                <label for="dogbreed" class="form-label">DogBreed:</label> 
+                <label for="dogbreed" class="form-label">Breed:</label> 
                 <InputText id="dogbreed" @bind-Value="DogList.DogBreed" class="form-control" /> 
                 <ValidationMessage For="() => DogList.DogBreed" class="text-danger" /> 
             </div>        
