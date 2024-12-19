@@ -13,6 +13,7 @@
 <p>
     <a href="doglists/create">Create New</a>
 </p>
+<<<<<<< Updated upstream
 
 <QuickGrid Class="table" Items="context.DogList">
     <PropertyColumn Property="doglist => doglist.DogName" />
@@ -26,13 +27,58 @@
         <a href="@($"doglists/delete?id={doglist.Id}")">Delete</a>
     </TemplateColumn>
 </QuickGrid>
+=======
+
+<table style="width:100%">
+    <tr>
+        <td>Photo</td>
+        <td>Name</td>
+        <td>Age</td>
+        <td>Breed</td>
+        <td>Description</td>
+        <td>Links</td>
+    </tr>
+    @foreach (var item in ListsOfDogs)
+    {
+        <tr>
+            <td>
+            <img src=@item.dogPhoto alt="myDog" style="width:100px;height:100px" >
+            </td>
+            <td >
+                @item.DogName
+            </td>
+            <td>
+                @item.DogAge
+            </td>
+            <td>
+                @item.DogBreed
+            </td>
+            <td >
+                @item.DogDescription
+            </td>
+            <td>
+                
+                    <a href="@($"doglists/edit?id={@item.Id}")">Edit</a> |
+                <a href="@($"doglists/details?id={@item.Id}")">Details</a> |
+                <a href="@($"doglists/delete?id={@item.Id}")">Delete</a>
+                
+            </td>
+        </tr>
+        
+    }
+
+</table>
+>>>>>>> Stashed changes
 
 @code {
     private Test2Context context = default!;
 
+    public List<DogList> ListsOfDogs;
+
     protected override void OnInitialized()
     {
         context = DbFactory.CreateDbContext();
+        ListsOfDogs = context.DogList.ToList();
     }
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();

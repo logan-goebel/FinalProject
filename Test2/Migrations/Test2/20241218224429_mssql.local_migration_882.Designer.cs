@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Test2.Data;
 
@@ -10,9 +11,11 @@ using Test2.Data;
 namespace Test2.Migrations.Test2
 {
     [DbContext(typeof(Test2Context))]
-    partial class Test2ContextModelSnapshot : ModelSnapshot
+    [Migration("20241218224429_mssql.local_migration_882")]
+    partial class mssqllocal_migration_882
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,6 +120,30 @@ namespace Test2.Migrations.Test2
                     b.HasKey("Id");
 
                     b.ToTable("DogList");
+                });
+
+            modelBuilder.Entity("Test2.Models.FAQSubmission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Answer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FAQSubmission");
                 });
 #pragma warning restore 612, 618
         }

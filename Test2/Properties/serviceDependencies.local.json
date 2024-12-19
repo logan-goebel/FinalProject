@@ -28,6 +28,13 @@
       "type": "mssql.local",
       "connectionId": "DogList",
       "dynamicId": null
+    },
+    "mssql6": {
+      "serviceConnectorResourceId": "",
+      "secretStore": "LocalSecretsFile",
+      "type": "mssql.local",
+      "connectionId": "DogList2",
+      "dynamicId": null
     }
   }
 }
